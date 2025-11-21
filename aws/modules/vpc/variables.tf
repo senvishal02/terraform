@@ -1,73 +1,65 @@
+# ⚙️ Region where resources will be deployed
 variable "region_name" {
-  type    = string
-  default = "us-east-1"
+  description = "AWS Region in which the infrastructure will be deployed (e.g., us-east-1)"
+  type        = string
 }
 
+# 🌐 CIDR Block for VPC
 variable "vpc_cidr_block" {
-  type    = string
-  default = "10.10.0.0/16"
+  description = "CIDR block for the VPC (e.g., 10.20.0.0/16)"
+  type        = string
 }
 
+# 🏷️ Environment Tag
 variable "environment" {
-  type    = string
-  default = "development"
+  description = "Deployment environment name (e.g., dev, stage, prod)"
+  type        = string
 }
 
+# 🌍 Public Subnets (AZ to CIDR mapping)
 variable "public_subnets" {
-  type    = list(string)
-  default = ["10.10.0.0/24", "10.10.2.0/24"]
+  description = "Map of public subnet CIDR blocks where key = availability zone and value = CIDR block"
+  type        = map(string)
 }
 
+# 🔐 Private Subnets (AZ to CIDR mapping)
 variable "private_subnets" {
-  type    = list(string)
-  default = ["10.10.1.0/24", "10.10.3.0/24"]
+  description = "Map of private subnet CIDR blocks where key = availability zone and value = CIDR block"
+  type        = map(string)
 }
 
-variable "public_az" {
-  type    = list(string)
-  default = ["us-east-1a", "us-east-1b"]
-}
-
-variable "private_az" {
-  type    = list(string)
-  default = ["us-east-1a", "us-east-1b"]
-}
-
+# 🚪 Security Group Ingress Rules
 variable "sg_ingress_rules" {
-  description = "Ingress rules for the security group"
+  description = "List of ingress rules for the security group"
   type = list(object({
     port        = number
     protocol    = string
     cidr_block  = string
     description = string
   }))
-  default = [
-    { port = 22, protocol = "tcp", cidr_block = "0.0.0.0/0", description = "SSH access" },
-    { port = 80, protocol = "tcp", cidr_block = "0.0.0.0/0", description = "HTTP access" }
-  ]
 }
 
+# 🔄 Security Group Egress Rules
 variable "sg_egress_rules" {
-  description = "Egress rules for the security group"
+  description = "List of egress rules for the security group"
   type = list(object({
     port        = number
     protocol    = string
     cidr_block  = string
     description = string
   }))
-  default = [
-    { port = 0, protocol = "-1", cidr_block = "0.0.0.0/0", description = "Allow all outbound" }
-  ]
 }
 
+# 🌏 Internet Gateway Creation Toggle
 variable "create_internet_gateway" {
-  description = "Create Internet Gateway for public subnets"
+  description = "Whether to create an Internet Gateway for the public subnets"
   type        = bool
   default     = true
 }
 
+# 🔁 NAT Gateway Creation Toggle
 variable "create_nat_gateway" {
-  description = "Create NAT Gateway for private subnets"
+  description = "Whether to create a NAT Gateway for private subnets"
   type        = bool
   default     = true
 }

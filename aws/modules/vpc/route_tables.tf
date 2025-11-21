@@ -1,12 +1,12 @@
 resource "aws_route_table" "public_routes" {
-  vpc_id = aws_vpc.eks_vpc.id
+  vpc_id = aws_vpc.vpc.id
   tags = {
     "Name" = "${var.environment}-public-route-table"
   }
 }
 
 resource "aws_route_table" "private_routes" {
-  vpc_id = aws_vpc.eks_vpc.id
+  vpc_id = aws_vpc.vpc.id
   tags = {
     "Name" = "${var.environment}-private-route-table"
   }
