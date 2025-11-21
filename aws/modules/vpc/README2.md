@@ -107,7 +107,7 @@ locals {
 }
 
 inputs = {
-  region_name     = "us-east-1"
+  region_name     = local.region
   environment     = "development"
   vpc_cidr_block  = "10.30.0.0/16"
 
